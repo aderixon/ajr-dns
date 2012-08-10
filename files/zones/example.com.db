@@ -1,0 +1,15 @@
+; $Id$
+$TTL 86400
+$ORIGIN example.com.
+@	IN	SOA	ns1.example.com. hostmaster.example.com. (
+				2012081001 ; Serial YYYYMMDDXX (XX = revision)
+				10800	; Refresh
+				3600	; Retry
+				604800	; Expiry
+				86400	; Minimum
+			);
+	IN	NS	ns1.
+	IN	NS	ns2.
+	IN	A	127.0.0.1
+www	IN	A	127.0.0.1
+test	IN	CNAME	www

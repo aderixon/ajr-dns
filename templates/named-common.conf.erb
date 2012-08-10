@@ -1,0 +1,68 @@
+# $Id$
+#
+# File:		named-common.conf
+#
+# Description:	Common named config (include)
+#
+# Requires:	named
+#
+
+key "rndc-key" {
+    algorithm hmac-md5;
+    secret "XXXXXXXXXXXXXXXXXXXXXXXX";
+};
+
+controls {
+    inet 127.0.0.1 port 953
+    allow { 127.0.0.1; } keys { "rndc-key"; };
+};
+
+
+acl "master" {
+    <%= dns_master %>/32;
+};
+
+acl "slaves" {
+<% dns_slaves.each do |slave| -%>
+    <%= slave + '/32;' %>
+<% end -%>
+};
+
+acl "office" {
+    <%= mgmt_nets.join(";\n    ") %>;
+};
+
+logging {
+    channel default_syslog {
+        syslog local2;
+        severity debug;
+    };
+
+    channel audit_log {
+        file "<%= datadir %>/data/named.log";
+        severity dynamic;
+        print-time yes;
+    };
+
+    category default { default_syslog; };
+    category general { default_syslog; };
+    category security { audit_log; default_syslog; };
+    category config { default_syslog; };
+    category resolver { audit_log; };
+    category xfer-in { audit_log; };
+    category xfer-out { audit_log; };
+    category notify { audit_log; };
+    category client { audit_log; };
+    category network { audit_log; };
+    category update { audit_log; };
+    category queries { audit_log; };
+    category lame-servers { audit_log; };
+
+};
+
+zone "." in {
+    type hint;
+    file "<%= datadir %>/named.ca";
+};
+
+include "<%= confdir %>/named.rfc1912.zones";

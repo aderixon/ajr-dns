@@ -1,0 +1,17 @@
+; $Id$
+$TTL 86400
+$ORIGIN nstest.elinia.com.
+@	IN	SOA	nstest1.elinia.com. unix.elinia.com. (
+				2011111522	; Serial
+				10800		; Refresh
+				3600		; Retry
+				604800		; Expiry
+				86400		; Minimum
+			);
+;
+        IN      NS      nstest1.elinia.com.
+        IN      NS      nstest2.elinia.com.
+;
+@	IN	TXT	"Test Zone"
+@       IN      A       127.0.0.1
+www     IN      A       127.0.0.1
