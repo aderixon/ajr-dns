@@ -14,6 +14,7 @@ zone and each named *domain*.db. Each file should contain resource records
 in standard BIND format.
 3. Define the class on each master and slave node, specifying the local IP
 of the master *and* slave(s) each time:
+
     class {'dns::server':
       dns_master => '192.168.0.1',
       dns_slaves => ['10.0.0.1', '10.0.0.2']
